@@ -1,6 +1,6 @@
-import x from'./test'
-const y=23;
-console.log(`hello ${x}yydhs${y}jfkysdkyy`)
+//controller file
+import sth from './models/Search';
+import { add, multiply, ID } from './views/searchView';
 //give the same as api name, and you do not need to give the path 
 //import axios from 'axios';
 
