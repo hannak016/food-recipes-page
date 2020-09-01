@@ -1,25 +1,26 @@
 import x from'./test'
-console.log(`hello ${x}yydhsjfkysnvdkyy`)
+const y=23;
+console.log(`hello ${x}yydhs${y}jfkysdkyy`)
 //give the same as api name, and you do not need to give the path 
-import axios from 'axios';
+//import axios from 'axios';
 
 
 //query the API
-async function getResults(query){
-    const proxy =  'https://cors-anywhere.herokuapp.com/';
+//async function getResults(query){
+    //const proxy =  'https://cors-anywhere.herokuapp.com/';
     
-    try{
+    //try{
        // compare to fetch: it returns automatically  json;and better at error handling.
-        const res = await axios(`https://forkify-api.herokuapp.com/api/search?&q=${this.query}`);
+        /* const res = await axios(`https://forkify-api.herokuapp.com/api/search?&q=${this.query}`); */
        /* search.js
         const res = await axios(`https://forkify-api.herokuapp.com/api/get?rId=${this.id}`); */
-        const recipes = res.data.recipes;
-        console.log(recipes);
+        /* const recipes = res.data.recipes;
+        console.log(recipes); */
         //console.log(res);
-    }
-    catch(error){
+    //}
+    /* catch(error){
         alert(error);
-    }  
-}
+    }  */ 
+//}
 
 //getResults('pizza');
