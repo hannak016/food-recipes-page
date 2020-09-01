@@ -1,0 +1,35 @@
+{
+  "name": "recipes",
+  "version": "1.0.0",
+  "description": "* attribution: powered by Jonas Schmedtmann Udemy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hannak016/food-recipes-page.git"
+  },
+  "author": "hannak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hannak016/food-recipes-page/issues"
+  },
+  "homepage": "https://github.com/hannak016/food-recipes-page#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "babel-polyfill": "^6.26.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^4.4.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
