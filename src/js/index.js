@@ -3,10 +3,12 @@ import sth from './models/Search';
 import { add, multiply, ID } from './views/searchView';
 //give the same as api name, and you do not need to give the path 
 //import axios from 'axios';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 
 //query the API
-//async function getResults(query){
+async function getResults(query){
     //const proxy =  'https://cors-anywhere.herokuapp.com/';
     
     //try{
@@ -21,6 +23,6 @@ import { add, multiply, ID } from './views/searchView';
     /* catch(error){
         alert(error);
     }  */ 
-//}
+}
 
 //getResults('pizza');
