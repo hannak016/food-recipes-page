@@ -2,9 +2,7 @@
 import Search from './models/Search';
 import * as searchView from './views/searchView';
 import { elements } from './views/base';
-/* import axios from 'axios';
-import "core-js/stable";
-import "regenerator-runtime/runtime"; */
+
 let state = {};
 
 
@@ -13,7 +11,6 @@ async function controlResults(){
 
     if(query){
         //search request
-
         state.search = new Search(query);
         await state.search.getResults();
 
