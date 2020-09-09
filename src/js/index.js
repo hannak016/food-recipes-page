@@ -15,8 +15,13 @@ async function controlResults(){
         await state.search.getResults();
 
         //prepare the ui(view)
+        
+        //clear
+        searchView.clrText();
+        searchView.clrContent();
 
         //render the ui(view)
+        searchView.renderRes(state.search.result);
         console.log(state.search.result);
     } 
 }
