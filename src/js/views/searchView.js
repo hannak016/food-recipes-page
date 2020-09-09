@@ -7,6 +7,26 @@ export const clrContent = () => {
 export const clrText = () => {
     elements.searchInput.value='';
 };
+//handle title length
+//a private function 
+// 17 as initialization, changable
+
+const limitTitleLen = (title,limit = 17) => {
+    const newTitle = [];
+    if(title.length >= limit){
+        title.split('').reduce((acc,word) => {
+            newTitle.push(word);
+            return acc + word
+
+        },0)
+        return `${newTitle.join('')}...`
+    }
+    else {
+        return title;
+    }
+
+}
+
 
 const renderElem = (e) => {
     //add ui<li>
@@ -17,7 +37,7 @@ const renderElem = (e) => {
         <img src="${e.image_url}" alt="${e.titel}">
     </figure>
     <div class="results__data">
-        <h4 class="results__name">"${e.title}"</h4>
+        <h4 class="results__name">"${limitTitleLen(e.title)}"</h4>
         <p class="results__author">"${e.publisher}"</p>
     </div>
     </a>
