@@ -3,6 +3,7 @@ import Search from './models/Search';
 import * as searchView from './views/searchView';
 import { elements } from './views/base';
 
+
 let state = {};
 
 
@@ -14,15 +15,21 @@ async function controlResults(){
         state.search = new Search(query);
         await state.search.getResults();
 
-        //prepare the ui(view)
-        
-        //clear
-        searchView.clrText();
-        searchView.clrContent();
 
+
+        //prepare the ui(view)
+        searchView.clrText();//clear
+        searchView.clrContent(); //clear 
+        searchView.renderSpinner(elements.searchRes);//loader
+     
+        
         //render the ui(view)
+    
+        searchView.clrSpinner();
         searchView.renderRes(state.search.result);
-        console.log(state.search.result);
+        
+        
+       
     } 
 }
 
@@ -32,3 +39,10 @@ elements.search.addEventListener('submit',e=>{
     controlResults();
 })
 
+function pausecomp(millis)
+{
+    var date = new Date();
+    var curDate = null;
+    do { curDate = new Date(); }
+    while(curDate-date < millis);
+}

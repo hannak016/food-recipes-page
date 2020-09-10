@@ -2,5 +2,6 @@
 export const elements = {
     search:document.querySelector(".search"),
     searchInput:document.querySelector(".search__field"),
-    resList:document.querySelector(".results__list")
+    resList:document.querySelector(".results__list"),
+    searchRes:document.querySelector(".results"),
 }
