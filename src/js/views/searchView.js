@@ -46,8 +46,11 @@ export const clrText = () => {
     elements.searchInput.value='';
 };
 
-export const renderRes = (results) => {
-    results.forEach(el => renderElem(el));  
+export const renderRes = (results,page=1,resPerPage=10) => {
+    const start = resPerPage * (page - 1);
+    const end = start + resPerPage;
+    //slice does not incude the end but the start inthis case showing 0-9 =10results in total
+    results.slice(start,end).forEach(el => renderElem(el));  
 };
 
 export const renderSpinner = parent => {
