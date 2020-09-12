@@ -24,9 +24,8 @@ async function controlResults(){
      
         
         //render the ui(view)
-    
         searchView.clrSpinner();
-        searchView.renderRes(state.search.result,1,10);
+        searchView.renderRes(state.search.result);
         
         
        
@@ -39,10 +38,25 @@ elements.search.addEventListener('submit',e=>{
     controlResults();
 })
 
-function pausecomp(millis)
-{
-    var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < millis);
+elements.searchResPages.addEventListener('click',event =>{
+    
+    //console.log(event.target);
+    //you could see: button span(text like'Page 2') and icon are seperate elements, you dont know then in this case which element you should attach the eventlistener to, or: you add thre  times to each of the three elements
+    //solution: event delegation
+
+    //closest(): a function for event delegation
+    const btn = event.target.closest( '.btn-inline')
+    //console.log(btn); now whereever you click = btn;
+    if (btn) {
+        //you add infos under data---blabla in html element, and get it by 'dataset.blablabla)(it is still a string)
+        const gotoPage = parseInt(btn.dataset.goto,10);
+        //otherwise you got all btns
+        searchView.clrContent();
+        searchView.renderRes(state.search.result,gotoPage);
+        console.log(gotoPage);
+
+    }
+
 }
+)
+

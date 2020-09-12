@@ -41,17 +41,21 @@ const renderElem = (e) => {
 export const searchRes = () => elements.searchInput.value;
 export const clrContent = () => {
     elements.resList.innerHTML='';
+    //clear the buttons
+    elements.searchResPages.innerHTML='';
 };
+
 export const clrText = () => {
     elements.searchInput.value='';
 };
 //type:prev/next
 const getBtn = (page,type) => `
     <button class="btn-inline results__btn--${type}" data-goto= ${type==='prev' ? page - 1 : page + 1}>
+        <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
         <svg class="search__icon">
             <use href="img/icons.svg#icon-triangle-${type === 'prev' ?'left':'right'}"></use>
         </svg>
-        <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+
     </button>
 
 `
