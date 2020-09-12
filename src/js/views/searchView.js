@@ -45,12 +45,45 @@ export const clrContent = () => {
 export const clrText = () => {
     elements.searchInput.value='';
 };
+//type:prev/next
+const getBtn = (page,type) => `
+    <button class="btn-inline results__btn--${type}" data-goto= ${type==='prev' ? page - 1 : page + 1}>
+        <svg class="search__icon">
+            <use href="img/icons.svg#icon-triangle-${type === 'prev' ?'left':'right'}"></use>
+        </svg>
+        <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
+    </button>
+
+`
+const renderBtns = (page, numPages, resPerPage) => {
+    const pages = Math.ceil(numPages/resPerPage);
+    let button;
+    if ( page === 1 && pages > 1 ){
+        //next
+        button = getBtn(page,'next');
+        console.log(button)
+
+    }else if(page < pages && pages > 1 ){
+        //both
+        button = `
+        ${getBtn(page,'prev')}
+        ${getBtn(page,'next')}
+        `
+    }
+    else if( page === pages && pages > 1 ){
+        //prev
+        button = getBtn(page,'prev')
+
+    }
+    elements.searchResPages.insertAdjacentHTML("afterbegin",button)
+}
 
 export const renderRes = (results,page=1,resPerPage=10) => {
     const start = resPerPage * (page - 1);
     const end = start + resPerPage;
     //slice does not incude the end but the start inthis case showing 0-9 =10results in total
-    results.slice(start,end).forEach(el => renderElem(el));  
+    results.slice(start,end).forEach(el => renderElem(el)); 
+    renderBtns(page,results.length,resPerPage); 
 };
 
 export const renderSpinner = parent => {

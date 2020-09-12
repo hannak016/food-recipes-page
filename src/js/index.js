@@ -26,7 +26,7 @@ async function controlResults(){
         //render the ui(view)
     
         searchView.clrSpinner();
-        searchView.renderRes(state.search.result);
+        searchView.renderRes(state.search.result,1,10);
         
         
        
