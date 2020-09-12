@@ -24,7 +24,7 @@ const renderElem = (e) => {
     //add ui<li>
     const res = 
     `<li>
-    <a class="results__link" href="${e.recipe_id}">
+    <a class="results__link" href="#${e.recipe_id}">
     <figure class="results__fig">
         <img src="${e.image_url}" alt="${e.titel}">
     </figure>

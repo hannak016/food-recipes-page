@@ -1,7 +1,9 @@
 //controller file
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import { elements } from './views/base';
+import { async } from 'regenerator-runtime';
 
 
 let state = {};
@@ -11,6 +13,10 @@ async function controlResults(){
     const query = searchView.searchRes();
 
     if(query){
+
+        try{
+
+        
         //search request
         state.search = new Search(query);
         await state.search.getResults();
@@ -26,13 +32,17 @@ async function controlResults(){
         //render the ui(view)
         searchView.clrSpinner();
         searchView.renderRes(state.search.result);
+        }
+        catch(err){
+            alert('failed to get search results')
+        }
         
         
        
     } 
 }
 
-
+//search controller
 elements.search.addEventListener('submit',e=>{
     e.preventDefault();
     controlResults();
@@ -60,3 +70,27 @@ elements.searchResPages.addEventListener('click',event =>{
 }
 )
 
+//recipe controller
+
+const controlRecipe = async () => {
+    const id = window.location.hash.replace('#','')
+    console.log(id)
+    if(id){
+        try{
+            state.recipe = new Recipe(id);
+            await state.recipe.getRecipe();
+            console.log(state.recipe);
+        }
+        catch(e){
+            alert('can not get the recope!!')
+        }
+        
+    }
+
+}
+ window.addEventListener('hashchange',controlRecipe) 
+ window.addEventListener('load',controlRecipe) 
+
+
+ 
+ 
