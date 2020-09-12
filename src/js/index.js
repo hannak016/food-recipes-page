@@ -71,18 +71,20 @@ elements.searchResPages.addEventListener('click',event =>{
 )
 
 //recipe controller
-
 const controlRecipe = async () => {
+    // replace is a string method
     const id = window.location.hash.replace('#','')
-    console.log(id)
+    //always add try catch to ajax code
     if(id){
         try{
             state.recipe = new Recipe(id);
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
             console.log(state.recipe);
+          
         }
         catch(e){
-            alert('can not get the recope!!')
+            alert('can not get the recipe!!')
         }
         
     }

@@ -22,6 +22,26 @@ export default class Recipe{
             alert('oppppppps, something went wrong')
         }    
     };
+    parseIngredients(){
+        //seperate the ingredietns to three part :count unit and ingredients
+        const unitsLong = ['tablespoons','tablespoon','ounces','ounce','teaspoons','teaspoon','cups','pounds'];
+        const unitsShort = ['tbsp','tbsp','oz','oz','tsp','tsp','cup','pound'];
+
+        const newIngredients = this.ingredients.map(el=>{
+            let ingredients = el.toLowerCase();
+            unitsLong.forEach((unit,index)=>{
+                ingredients = ingredients.replace(unit,unitsShort[index])
+            })
+            ingredients = ingredients. replace(/[{()}]/g, '');
+
+            return ingredients;
+
+        })
+
+        this.ingredients = newIngredients;
+        
+
+    }
 
 
 }
