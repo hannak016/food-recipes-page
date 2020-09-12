@@ -28,20 +28,59 @@ export default class Recipe{
         const unitsShort = ['tbsp','tbsp','oz','oz','tsp','tsp','cup','pound'];
 
         const newIngredients = this.ingredients.map(el=>{
-            let ingredients = el.toLowerCase();
+            let ingredient = el.toLowerCase();
             unitsLong.forEach((unit,index)=>{
-                ingredients = ingredients.replace(unit,unitsShort[index])
+                ingredient = ingredient.replace(unit,unitsShort[index])
             })
-            ingredients = ingredients. replace(/[{()}]/g, '');
+            ingredient = ingredient.replace(/ *\([^)]*\) */g, " ");
+            const arrIng = ingredient.split(' ');
+            const unitIndex = arrIng.findIndex(elem => {
+               if(unitsShort.includes(elem)){
+                   return elem;
+               } 
+            })
 
-            return ingredients;
 
+
+            let objIng;
+            //if it has an unit 
+            if(unitIndex >- 1){
+                //todo
+                let count;
+                //slice such vom Anfang bis auf du dein unit triffst
+                const arrCount = arrIng.slice(0,unitIndex);
+                if(arrCount.length === 1){
+                    count = eval(arrIng[0].replace('-','+'));
+                }
+                else{
+                
+                //eval:turn the string to js code zB: eval('4+1/2')=>4.5
+                    count = eval(arrIng.slice(0,unitIndex).join('+'));
+                }
+                objIng = {
+                    count,
+                    unit:arrIng[unitIndex],
+                    ingredient:arrIng.slice(unitIndex+1).join(' ')
+
+                }
+
+            }else if(parseInt(arrIng[0],10)){
+                objIng = {
+                    count:parseInt(arrIng[0],10),
+                    unit:'',
+                    ingredient:arrIng.slice(1).join(' ')
+                }
+            }else if(unitIndex===-1){
+                //no unit
+                objIng = {
+                    count:1,
+                    unit:'',
+                    ingredient
+                }
+            }
+            return objIng; 
         })
 
         this.ingredients = newIngredients;
-        
-
     }
-
-
 }

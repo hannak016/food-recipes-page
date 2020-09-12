@@ -15,8 +15,6 @@ async function controlResults(){
     if(query){
 
         try{
-
-        
         //search request
         state.search = new Search(query);
         await state.search.getResults();
