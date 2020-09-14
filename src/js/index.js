@@ -2,6 +2,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements } from './views/base';
 import { async } from 'regenerator-runtime';
 
@@ -79,6 +80,8 @@ const controlRecipe = async () => {
             await state.recipe.getRecipe();
             state.recipe.parseIngredients();
             console.log(state.recipe);
+            recipeView.clrContent();
+            recipeView.renderRecipe(state.recipe);
           
         }
         catch(e){
@@ -90,6 +93,32 @@ const controlRecipe = async () => {
 }
  window.addEventListener('hashchange',controlRecipe) 
  window.addEventListener('load',controlRecipe) 
+
+
+ elements.recipe.addEventListener('click',e=>{
+//'-' if your target is the btn or any children of this button: event delegation again
+    if(e.target.matches('.btn-minus, .btn-minus *')){
+        //model
+        if(state.recipe.servings >1){
+            state.recipe.updateServings('-');
+            recipeView.updateServings(state.recipe);
+        }
+       
+    }
+//'+'   
+    else if(e.target.matches('.btn-add, .btn-add *')){
+
+        state.recipe.updateServings('+');
+        recipeView.updateServings(state.recipe);
+    }
+
+    
+    console.log(state.recipe.servings)
+    
+ });
+
+
+
 
 
  

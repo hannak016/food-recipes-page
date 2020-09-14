@@ -11,6 +11,7 @@ export default class Recipe{
         try{
         const recipes = await axios(
         `https://forkify-api.herokuapp.com/api/get?rId=${this.id}`)
+        this.url = recipes.data.recipe.source_url;
         this.img = recipes.data.recipe.image_url;
         this.publisher = recipes.data.recipe.publisher;
         this.ingredients = recipes.data.recipe.ingredients;
@@ -83,4 +84,16 @@ export default class Recipe{
 
         this.ingredients = newIngredients;
     }
+    updateServings(type){
+        //from right to left
+        const newServings = type ==='+'?this.servings+1:this.servings-1;
+
+        this.ingredients.forEach(ing =>
+            ing.count *= newServings/this.servings )
+
+        this.servings = newServings;
+
+    }
+
+
 }
