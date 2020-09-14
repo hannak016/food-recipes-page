@@ -1,6 +1,7 @@
 //controller file
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import { elements } from './views/base';
@@ -116,6 +117,12 @@ const controlRecipe = async () => {
     console.log(state.recipe.servings)
     
  });
+
+
+ window.l  = new List();
+ l.add(1,'cup','milk');
+ l.add(2,'','tomatoes');
+ 
 
 
 
