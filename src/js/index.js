@@ -12,7 +12,12 @@ import { async } from 'regenerator-runtime';
 let state = {};
 
 
-async function controlResults(){
+/**
+ *SEARCH FIELD
+ */
+
+//controller
+async function searchResults(){
     const query = searchView.searchRes();
 
     if(query){
@@ -43,12 +48,11 @@ async function controlResults(){
     } 
 }
 
-//search controller
+//trigger
 elements.search.addEventListener('submit',e=>{
     e.preventDefault();
-    controlResults();
+    searchResults();
 })
-
 elements.searchResPages.addEventListener('click',event =>{
     
     //console.log(event.target);
@@ -71,7 +75,57 @@ elements.searchResPages.addEventListener('click',event =>{
 }
 )
 
-//recipe controller
+
+
+
+
+
+/**
+ * SHOPPING LIST
+ */
+
+// controller
+const controlShoppingList = () => {
+    if(!state.list){
+        state.list = new List();
+    }
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.add(el.count,el.unit,el.ingredient);
+        ListView.renderItem(item);
+
+    })
+}
+
+// trigger
+elements.shopping.addEventListener('click',e => {
+    //dateset: defeniere s selber so dass du darauf zugreifen kannst  
+    // select so
+    const id = event.target.closest( '.shopping__item').dataset.itemid;
+
+    // das Element und alle ihre Kinder: suche mal in html,ob es gekaspelte divs gibt
+    if(e.target.matches('.shopping__delete, .shopping__delete *')){
+        ListView.deleteItem(id);
+        state.list.delete(id);
+    }
+    // keine gekaspelte divs 
+    else if(e.target.matches('.shopping__count-value')){
+        const val = parseFloat(e.target.value,10);
+        state.list.update(id,val);
+    }
+
+
+} )
+
+
+
+
+
+/**
+ * RECIPE RESULTS
+ */
+
+
+// controller
 const controlRecipe = async () => {
     // replace is a string method
     const id = window.location.hash.replace('#','')
@@ -93,46 +147,17 @@ const controlRecipe = async () => {
     }
 
 }
+
+//trigger
  window.addEventListener('hashchange',controlRecipe) 
  window.addEventListener('load',controlRecipe) 
 
-const controlList = () => {
-    if(!state.list){
-        state.list = new List();
-    }
-    state.recipe.ingredients.forEach(el => {
-        const item = state.list.add(el.count,el.unit,el.ingredient);
-        ListView.renderItem(item);
-
-    })
-}
-
-elements.shopping.addEventListener('click',e => {
-    //dateset: defeniere s selber so dass du darauf zugreifen kannst  
-    // select so
-    const id = event.target.closest( '.shopping__item').dataset.itemid;
-
-    // das Element und alle ihre Kinder: suche mal in html,ob es gekaspelte divs gibt
-    if(e.target.matches('.shopping__delete, .shopping__delete *')){
-        ListView.deleteItem(id);
-        state.list.delete(id);
-    }
-    // keine gekaspelte divs 
-    else if(e.target.matches('.shopping__count-value')){
-        const val = parseFloat(e.target.value,10);
-        state.list.update(id,val);
-
-
-    }
-
-
-} )
-
-window.state = state;
-console.log(window.state)
 
  elements.recipe.addEventListener('click',e => {
-//'-' if your target is the btn or any children of this button: event delegation again
+
+
+    //'-' 
+    //if your target is the btn or any children of this button: event delegation again
     if(e.target.matches('.btn-minus, .btn-minus *')){
         //model
         if(state.recipe.servings >1){
@@ -141,16 +166,16 @@ console.log(window.state)
         }
        
     }
-//'+'   
+
+    //'+'   
     else if(e.target.matches('.btn-add, .btn-add *')){
         state.recipe.updateServings('+');
         recipeView.updateServings(state.recipe);
     }
-    //console.log(state.recipe.servings)
-
+    
 
     else if(e.target.matches('.recipe_btn_add, .recipe_btn_add *')){
-       controlList();
+        controlShoppingList();
     }
     
     
