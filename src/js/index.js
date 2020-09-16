@@ -2,9 +2,13 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes';
+
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as ListView from './views/ListView';
+import * as LikeView from './views/LikeView';
+
 import { elements } from './views/base';
 import { async } from 'regenerator-runtime';
 
@@ -115,6 +119,36 @@ elements.shopping.addEventListener('click',e => {
 
 
 } )
+/**
+ * LIKES
+ */
+
+
+//controller
+const controlLikes = () => {
+    if(!state.likes){
+        state.likes = new Likes();
+    }
+    //if NOT liked yet
+
+    if(!state.likes.isLiked(state.recipe.id)){
+       state.likes.add(state.recipe.id,state.recipe.img,state.recipe.author,state.recipe.title)
+       //LikeView.renderHeart();
+
+       console.log(state.likes);
+    }
+    
+    //if already liked
+    else {
+        state.likes.delete(state.recipe.id);
+        console.log(state.likes);
+        //LikeView.clearHeart();
+
+    }
+  
+}
+window.likes = state.likes
+
 
 
 
@@ -135,7 +169,6 @@ const controlRecipe = async () => {
             state.recipe = new Recipe(id);
             await state.recipe.getRecipe();
             state.recipe.parseIngredients();
-            console.log(state.recipe);
             recipeView.clrContent();
             recipeView.renderRecipe(state.recipe);
           
@@ -172,11 +205,21 @@ const controlRecipe = async () => {
         state.recipe.updateServings('+');
         recipeView.updateServings(state.recipe);
     }
-    
 
+    ///////since the addToShoppingList button and the like button are both in recipe so triggers are put here
+
+
+
+    //shoppingList trigger
     else if(e.target.matches('.recipe_btn_add, .recipe_btn_add *')){
         controlShoppingList();
     }
+
+    //Likes trigger
+    else if(e.target.matches('.recipe__love, .recipe__love *')){
+        controlLikes();
+    }
+
     
     
  });
