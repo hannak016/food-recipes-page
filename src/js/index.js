@@ -4,6 +4,7 @@ import Recipe from './models/Recipe';
 import List from './models/List';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as ListView from './views/ListView';
 import { elements } from './views/base';
 import { async } from 'regenerator-runtime';
 
@@ -95,8 +96,42 @@ const controlRecipe = async () => {
  window.addEventListener('hashchange',controlRecipe) 
  window.addEventListener('load',controlRecipe) 
 
+const controlList = () => {
+    if(!state.list){
+        state.list = new List();
+    }
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.add(el.count,el.unit,el.ingredient);
+        ListView.renderItem(item);
 
- elements.recipe.addEventListener('click',e=>{
+    })
+}
+
+elements.shopping.addEventListener('click',e => {
+    //dateset: defeniere s selber so dass du darauf zugreifen kannst  
+    // select so
+    const id = event.target.closest( '.shopping__item').dataset.itemid;
+
+    // das Element und alle ihre Kinder: suche mal in html,ob es gekaspelte divs gibt
+    if(e.target.matches('.shopping__delete, .shopping__delete *')){
+        ListView.deleteItem(id);
+        state.list.delete(id);
+    }
+    // keine gekaspelte divs 
+    else if(e.target.matches('.shopping__count-value')){
+        const val = parseFloat(e.target.value,10);
+        state.list.update(id,val);
+
+
+    }
+
+
+} )
+
+window.state = state;
+console.log(window.state)
+
+ elements.recipe.addEventListener('click',e => {
 //'-' if your target is the btn or any children of this button: event delegation again
     if(e.target.matches('.btn-minus, .btn-minus *')){
         //model
@@ -108,21 +143,18 @@ const controlRecipe = async () => {
     }
 //'+'   
     else if(e.target.matches('.btn-add, .btn-add *')){
-
         state.recipe.updateServings('+');
         recipeView.updateServings(state.recipe);
     }
+    //console.log(state.recipe.servings)
 
+
+    else if(e.target.matches('.recipe_btn_add, .recipe_btn_add *')){
+       controlList();
+    }
     
-    console.log(state.recipe.servings)
     
  });
-
-
- window.l  = new List();
- l.add(1,'cup','milk');
- l.add(2,'','tomatoes');
- 
 
 
 
