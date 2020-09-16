@@ -12,6 +12,7 @@ export default class List{
             id:uniqid()
         }
         this.items.push(item)
+        return item;
 
     }
     delete(id){
