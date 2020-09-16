@@ -122,6 +122,18 @@ elements.shopping.addEventListener('click',e => {
 /**
  * LIKES
  */
+//storage
+window.addEventListener('load',()=>{
+    state.likes = new Likes();
+    state.likes.readStorage();
+    LikeView.renderLikesList(state.likes.likes.length);
+    state.likes.likes.forEach(like=>{
+        LikeView.renderLikesContent(like);
+
+    })
+
+
+})
 
 
 //controller
@@ -132,22 +144,28 @@ const controlLikes = () => {
     //if NOT liked yet
 
     if(!state.likes.isLiked(state.recipe.id)){
-       state.likes.add(state.recipe.id,state.recipe.img,state.recipe.author,state.recipe.title)
-       //LikeView.renderHeart();
+       const newLike = 
+       state.likes.add(state.recipe.id,state.recipe.img,state.recipe.publisher,state.recipe.title)
 
+       LikeView.renderHeart(true);
        console.log(state.likes);
+
+       LikeView.renderLikesContent(newLike)
     }
     
     //if already liked
     else {
         state.likes.delete(state.recipe.id);
         console.log(state.likes);
-        //LikeView.clearHeart();
+        LikeView.renderHeart(false);
+        LikeView.deleteLikesContent(state.recipe.id)
 
     }
+
+    LikeView.renderLikesList(state.likes.likes.length);
   
 }
-window.likes = state.likes
+
 
 
 
@@ -170,7 +188,10 @@ const controlRecipe = async () => {
             await state.recipe.getRecipe();
             state.recipe.parseIngredients();
             recipeView.clrContent();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(
+                state.recipe,
+                state.likes.isLiked(id)
+                );
           
         }
         catch(e){
@@ -223,6 +244,9 @@ const controlRecipe = async () => {
     
     
  });
+
+
+
 
 
 
